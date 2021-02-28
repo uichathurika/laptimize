@@ -37,6 +37,7 @@ class Solver:
             ex: {'x1':2.0,'X2':1.746}
         """
         try:
+            self.constraints = self.constraints.fillna(0)
             solution_df = pd.DataFrame()
             piecewise_lp, segment, curve = self.lap_model.model_solver(self.constraints, self.partition_len)
             segment_0 = segment.copy()
@@ -49,7 +50,7 @@ class Solver:
                                               'lb': lb0, 'ub': ub0, 'k': k, 'k_lower': k_lower, 'k_upper': k_upper,
                                               'branching_node': segment_key}, ignore_index=True)
             global_df = pd.DataFrame()
-            while len(solution_df) > 0:
+            while (len(solution_df)) > 0 and (len(solution_df) <= 100):
                 solution_df, global_df = self.sub_problem_solve(solution_df, combine_segment_curve, global_df)
             global_solution = global_df.sort_values(['lb']).head(1).reset_index(drop=True)
             lap_intervals = self.final_solution(global_solution.piecewise_lp[0], segment_0)
@@ -142,7 +143,10 @@ class Solver:
                 var_value = 0
                 lp_allocation = piecewise_lp[lp_constraint.name]
                 for key in lp_allocation:
-                    var_value = var_value + segment.loc[key].segment * lp_allocation[key].value()
+                    try:
+                        var_value = var_value + segment.loc[key].segment * lp_allocation[key].value()
+                    except:
+                        var_value = var_value + segment.loc[key].segment * lp_allocation[key]
                 lap_value[lp_constraint.name] = var_value
             return lap_value
         except Exception as err:

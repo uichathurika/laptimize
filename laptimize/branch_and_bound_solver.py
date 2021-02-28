@@ -1,4 +1,5 @@
 import numpy as np
+
 from laptimize.log import LogFactory
 
 
@@ -72,10 +73,13 @@ class BranchAndBoundSolver:
                 if len(expressions[expressions >= 1 - self.error]) >= 1:
                     self.get_objective_adjacent(lp_allocation, lp_constraint, combine_segment_curve)
                 else:
+                    self._k_upper = []
+                    self._k_lower = []
+                    self._k = []
                     self.get_objective_nonadjacent(lp_allocation, lp_constraint, combine_segment_curve)
 
-            self._lower_bound = round(sum(self._objective_initial),4)
-            upper_bound = round(sum(self._objective_updated),4)
+            self._lower_bound = round(sum(self._objective_initial), 4)
+            upper_bound = round(sum(self._objective_updated), 4)
             for inequality in values.index:
                 self._constraint_status.append(self._constraint[inequality] - values[inequality] < self.error)
 
@@ -126,10 +130,11 @@ class BranchAndBoundSolver:
                 self._objective_initial.append(lp_allocation[key].value() * combine_segment_curve.loc[key]['objective'])
                 self._objective_updated.append(lp_allocation[key].value() * combine_segment_curve.loc[key]['objective'])
 
-            constraint_values = combine_segment_curve.iloc[:,3:]
+            constraint_values = combine_segment_curve.iloc[:, 3:]
             for constraint in constraint_values.columns:
                 for key in lp_allocation:
-                    self._constraint[constraint] += (lp_allocation[key].value() * combine_segment_curve.loc[key][constraint])
+                    self._constraint[constraint] += (
+                            lp_allocation[key].value() * combine_segment_curve.loc[key][constraint])
 
         except Exception as err:
             self.logger.info('get_objective_adjacent method ended with error ')
@@ -165,7 +170,7 @@ class BranchAndBoundSolver:
                 for constraint in list(self._constraint.keys()):
                     self._constraint[constraint] += (lp_allocation[key] * combine_segment_curve.loc[key][constraint])
 
-            self.get_branch_variables(segment,upper_limit, lower_limit)
+            self.get_branch_variables(segment, upper_limit, lower_limit)
             # segment code which have non adjacent lambdas.
             self._segment_key = lp_constraint.name
 

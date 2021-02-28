@@ -145,7 +145,7 @@ class LAPModel(object):
                 self.curve = self.curve.drop([key])
 
     def add_weights_sum_constraint_to_model(self, weights):
-        self.model += sum(weights) == 1
+        self.model += pulp.lpSum(weights) == 1
 
     def add_model_constraint_and_objective(self, constraints, values):
         """
@@ -163,10 +163,10 @@ class LAPModel(object):
         """
         try:
             # Add objective function to model.
-            self.model += sum(constraints.objective) + self.lp_slack['p1']
+            self.model += pulp.lpSum(constraints.objective) + self.lp_slack['p1']
             constraints = constraints.drop(['objective'], axis=1)
             for constraint_expression in constraints:
-                self.model += (sum(constraints[constraint_expression]) + self.lp_slack['p1']) <= values[
+                self.model += (pulp.lpSum(constraints[constraint_expression]) + self.lp_slack['p1']) <= values[
                     constraint_expression]
 
         except Exception as err:
