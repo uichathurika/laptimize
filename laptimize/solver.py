@@ -54,8 +54,7 @@ class Solver:
                 solution_df, global_df = self.sub_problem_solve(solution_df, combine_segment_curve, global_df)
             global_solution = global_df.sort_values(['lb']).head(1).reset_index(drop=True)
             lap_intervals = self.final_solution(global_solution.piecewise_lp[0], segment_0)
-            print('obj_value :', global_solution.lb[0])
-            print(lap_intervals)
+            lap_intervals['obj_value'] = global_solution.lb[0]
             return lap_intervals
         except Exception as err:
             self.logger.info('solve method ended with error ')

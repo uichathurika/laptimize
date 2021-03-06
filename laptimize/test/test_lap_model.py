@@ -1,11 +1,12 @@
-import pytest
-import pulp
 import pandas as pd
+import pulp
+import pytest
+
 from laptimize.lap_model import LAPModel
 
-problem = pd.DataFrame({'objective': {'x1': lambda x: 12*x if x > 0 else 2, 'x2':lambda x: 7*x - x**2},
-                        'constraint_1': {'x1': lambda x: -2*(x**4), 'x2': lambda x: -x, 'value': -2},
-                        'constraint_2': {'x1': lambda x: 2*x, 'x2': lambda x: x, 'value': 3},
+problem = pd.DataFrame({'objective': {'x1': lambda x: 12 * x if x > 0 else 2, 'x2': lambda x: 7 * x - x ** 2},
+                        'constraint_1': {'x1': lambda x: -2 * (x ** 4), 'x2': lambda x: -x, 'value': -2},
+                        'constraint_2': {'x1': lambda x: 2 * x, 'x2': lambda x: x, 'value': 3},
                         'capacity': {'x1': [0, 2], 'x2': [0, 3]}})
 
 variable_names = ['x1_0', 'x1_1', 'x1_2', 'x1_3']
@@ -22,9 +23,8 @@ curve_df = pd.DataFrame({'objective': [0, 2, 4, 6, 8, 0, 2, 4, 6, 8, 10, 12],
                          'constraint_1': [0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 5, 6],
                          'constraint_2': [0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 5, 6]}, index=lp_variable_names)
 segment_df = pd.DataFrame(
-        {'key': ['x1', 'x1', 'x1', 'x1','x1', 'x2', 'x2', 'x2', 'x2', 'x2', 'x2', 'x2'],
-         'segment': [0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 5, 6]}, index=lp_variable_names)
-
+    {'key': ['x1', 'x1', 'x1', 'x1', 'x1', 'x2', 'x2', 'x2', 'x2', 'x2', 'x2', 'x2'],
+     'segment': [0, 1, 2, 3, 4, 0, 1, 2, 3, 4, 5, 6]}, index=lp_variable_names)
 
 
 @pytest.fixture
@@ -70,7 +70,7 @@ def test_add_sub_problem(lap_model):
 
 
 def test_model_solver(lap_model):
-    res1, res2, res3 = lap_model.model_solver(problem)
+    res1, res2, res3 = lap_model.model_solver(problem, 0.5)
     assert len(res1['x1']) == 5
     assert res1['x1']['x1_0'].value() == 0.9375
     assert res2.shape == (12, 2)
@@ -84,11 +84,3 @@ def test_global_solver(lap_model):
     assert len(res1) == 2
     assert len(res2) == 9
     assert len(res3) == 9
-
-
-
-
-
-
-
-
