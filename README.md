@@ -1,6 +1,6 @@
-# laptimize
+# laptimize - Linear Approximated Programming for Optimization
 laptimize is a python package to solve seperable non convex optimization problem which is based on branch and bound algorithm developed by  James E.Falk (1972) of The
-George Washington University
+George Washington University. It has been proven that it can generate global solution for large class of nonlinear programming problems in a finite number of steps.
 
 ## Installation
 ```sh
@@ -9,12 +9,12 @@ pip install laptimize
 
 ## Examples
 laptimize requires Python 2.7 or Python >= 3.4
+problem type which `laptimize` can applies
 
 Minimize:
 
-```sh
+
             F0(x1, x2) = 12x1 + 7x2 - x2^2
-```
 
 
 Subject to
@@ -26,18 +26,23 @@ convex polygon
 non convex constraint
 
             F2(x1, X2) = -2x1^4 -x2 +2 <= 0
-            0 <= x1 <= 2, 0 <= x1 <= 3
+            0 <= x1 <= 2, 0 <= x1 <= 3  
+            
+**Example Code**
 
+    from laptimize.solver import Solver
 
-
-```sh
-from laptimize.solver import Solver
-
-example_1 = {'objective': {'x1': lambda x: 12 * x if x > 0 else 2, 'x2': lambda x: 7 * x - x ** 2},
+    example_1 = {'objective': {'x1': lambda x: 12 * x, 'x2': lambda x: 7 * x - x ** 2},
              'constraint_1': {'x1': lambda x: -2 * (x ** 4), 'x2': lambda x: -x, 'value': -2},
              'constraint_2': {'x1': lambda x: 2 * x, 'x2': lambda x: x, 'value': 3},
              'capacity': {'x1': [0, 2], 'x2': [0, 3]}}
-             
-solution = Solver(example_1, partition_len=0.5).solve()
-print(solution)
-```
+
+        
+    solution = Solver(example_1, partition_len=0.5).solve()
+    print(solution)
+        
+**Comments, bug reports, patches and suggestions are welcome.**
+
+* Comments and suggestions: https://github.com/uichathurika/laptimize/discussions
+* Bug reports: https://github.com/uichathurika/laptimize/issues
+* Patches: https://github.com/uichathurika/laptimize/pulls
