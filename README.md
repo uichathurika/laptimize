@@ -7,7 +7,8 @@ George Washington University. It has been proven that it can generate global sol
 pip install laptimize
 ```
 
-###Dependencies
+## Dependencies
+
 laptimize requires Python >= 3.6
 
 NumPy (>= 1.19.2)
