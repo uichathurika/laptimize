@@ -1,5 +1,5 @@
 # laptimize - Linear Approximated Programming for Optimization
-laptimize is a python package to solve seperable non convex optimization problem which is based on branch and bound algorithm developed by  James E.Falk (1972) of The
+laptimize is a python package to solve separable non convex optimization problem which is based on branch and bound algorithm developed by  James E.Falk (1972) of The
 George Washington University. It has been proven that it can generate global solution for large class of nonlinear programming problems in a finite number of steps.
 
 ## Installation
@@ -7,9 +7,23 @@ George Washington University. It has been proven that it can generate global sol
 pip install laptimize
 ```
 
+###Dependencies
+laptimize requires Python >= 3.6
+
+NumPy (>= 1.19.2)
+Pandas (>= 1.1.3)
+PuLP (>= 2.3)
+
+
+
+
 ## Examples
-laptimize requires Python 2.7 or Python >= 3.4
+
+Refer Examples directory for more examples
+
 problem type which `laptimize` can applies
+
+Separable linear/non-linear convex/non-convex minimization objective function
 
 Minimize:
 
@@ -17,7 +31,7 @@ Minimize:
             F0(x1, x2) = 12x1 + 7x2 - x2^2
 
 
-Subject to
+Subject to separable linear/non-linear convex/non-convex constraint with '<=' inequality
 
 convex polygon
 
