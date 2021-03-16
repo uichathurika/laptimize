@@ -6,13 +6,13 @@ from laptimize.log import LogFactory
 
 
 class Solver:
-    """This class does solving non linear optimization problems using piecewise linear approximated programing
+    """This class does solving non linear optimization problems using piecewise linear approximated programming
     branch and bond technique"""
 
-    def __init__(self, constraints, partition_len=0.25):
+    def __init__(self, constraints, partition_len=0.25, error=0.001):
         self.logger = LogFactory.get_logger()
         self.constraints = pd.DataFrame(constraints)
-        self.error = 0.001
+        self.error = error
         self.partition_len = partition_len
         self.lap_model = LAPModel()
         self.branch_and_bound_solver = BranchAndBoundSolver(self.error)
