@@ -11,12 +11,15 @@ Installation
         pip install laptimize
 
 
-Dependencies
-------------
+
+## Dependencies
+
 laptimize requires Python >= 3.6
 
 NumPy (>= 1.19.2)
+
 Pandas (>= 1.1.3)
+
 PuLP (>= 2.3)
 
 
