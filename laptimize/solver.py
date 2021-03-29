@@ -52,8 +52,16 @@ class Solver:
             global_df = pd.DataFrame()
             while (len(solution_df)) > 0 and (len(solution_df) <= 100):
                 solution_df, global_df = self.sub_problem_solve(solution_df, combine_segment_curve, global_df)
-            global_solution = global_df.sort_values(['lb']).head(1).reset_index(drop=True)
-            lap_intervals = self.final_solution(global_solution.piecewise_lp[0], segment_0)
+            global_solution = global_df
+            global_solution['solution'] = pd.Series((dict() for i in range(len(global_solution))),
+                                                    index=global_solution.index)
+            global_solution = global_df.sort_values(['lb']).reset_index(drop=True)
+            self.constraints = self.constraints.drop(['capacity'], axis=1)
+            self.constraints = self.constraints.drop(['value'], axis=0)
+            for index, row in global_solution.iterrows():
+                lap_intervals = self.final_solution(row.piecewise_lp, segment_0)
+                global_solution.at[index, 'solution'] = lap_intervals
+            lap_intervals = global_solution.solution[0]
             lap_intervals['obj_value'] = global_solution.lb[0]
             return lap_intervals
         except Exception as err:
@@ -107,7 +115,6 @@ class Solver:
                                  'segment': segment1, 'curve': curve1,
                                  'lb': lb1, 'ub': ub1, 'k': k1, 'k_lower': k_lower1, 'k_upper': k_upper1,
                                  'branching_node': segment_key1}, ignore_index=True)
-
                         sub_problem_no += 1
                 iteration_no += 1
             else:
@@ -136,8 +143,6 @@ class Solver:
         """
         try:
             lap_value = dict()
-            self.constraints = self.constraints.drop(['capacity'], axis=1)
-            self.constraints = self.constraints.drop(['value'], axis=0)
             for _, lp_constraint in self.constraints.iterrows():
                 var_value = 0
                 lp_allocation = piecewise_lp[lp_constraint.name]

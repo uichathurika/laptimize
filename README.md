@@ -1,13 +1,18 @@
-# laptimize - Linear Approximated Programming for Optimization
+laptimize - Linear Approximated Programming for Optimization
+============================================================
+
 laptimize is a python package to solve separable non convex optimization problem which is based on branch and bound algorithm developed by  James E.Falk (1972) of The
 George Washington University. It has been proven that it can generate global solution for large class of nonlinear programming problems in a finite number of steps.
+In many practical cases Nonlinear optimization problems are hard to solve and only limited methods are implemented. Many such problems, can be approximated arbitrarily closely by separable problems if all functions are piecewise linear. The laptimize python package will find a global optimum to these latter problems.
 
-## Installation
-```sh
-pip install laptimize
-```
+Installation
+------------
 
-###Dependencies
+        pip install laptimize
+
+
+Dependencies
+------------
 laptimize requires Python >= 3.6
 
 NumPy (>= 1.19.2)
@@ -17,7 +22,8 @@ PuLP (>= 2.3)
 
 
 
-## Examples
+Examples
+--------
 
 Refer Examples directory for more examples
 
@@ -40,19 +46,23 @@ convex polygon
 non convex constraint
 
             F2(x1, X2) = -2x1^4 -x2 +2 <= 0
+            
             0 <= x1 <= 2, 0 <= x1 <= 3  
             
 **Example Code**
 
     from laptimize.solver import Solver
+    
 
     example_1 = {'objective': {'x1': lambda x: 12 * x, 'x2': lambda x: 7 * x - x ** 2},
-             'constraint_1': {'x1': lambda x: -2 * (x ** 4), 'x2': lambda x: -x, 'value': -2},
-             'constraint_2': {'x1': lambda x: 2 * x, 'x2': lambda x: x, 'value': 3},
-             'capacity': {'x1': [0, 2], 'x2': [0, 3]}}
+                 'constraint_1': {'x1': lambda x: -2 * (x ** 4), 'x2': lambda x: -x, 'value': -2},
+                 'constraint_2': {'x1': lambda x: 2 * x, 'x2': lambda x: x, 'value': 3},
+                 'capacity': {'x1': [0, 2], 'x2': [0, 3]}}
 
         
     solution = Solver(example_1, partition_len=0.5).solve()
+    
+    
     print(solution)
         
 **Comments, bug reports, patches and suggestions are welcome.**

@@ -24,7 +24,7 @@ setup(
     author_email="uichathurika@gmail.com",
     description=DESCRIPTION,
     long_description=long_description,
-    long_description_content_type="text/x-rst",
+    long_description_content_type="text/markdown",
     packages=find_packages(),
     install_requires=INSTALL_REQUIRES,
 
@@ -35,6 +35,6 @@ setup(
         "Programming Language :: Python :: 3.6",
         "Operating System :: Microsoft :: Windows",
         "Natural Language :: English",
-        "Topic :: Scientific :: Mathematics"
+        "Topic :: Scientific/Engineering :: Mathematics"
     ]
 )
