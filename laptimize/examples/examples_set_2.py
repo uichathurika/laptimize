@@ -1,8 +1,7 @@
 from laptimize.solver import Solver
 
 '''
-example_1 is from research paper
-An Algorithm for Separable Non convex Programming Problems
+Source: An Algorithm for Separable Non convex Programming Problems
 
 Authors: James E. Falk and Richard M. Soland, May 1969
 
@@ -42,8 +41,7 @@ solution_1 = Solver(example_1, partition_len=0.5).solve()
 print(solution_1)
 
 '''
-example_2 is from research paper
-An Algorithm for Separable Non convex Programming Problems
+Source: An Algorithm for Separable Non convex Programming Problems
 
 Authors: James E. Falk and Richard M. Soland, May 1969
 
@@ -79,8 +77,7 @@ solution_2_2 = Solver(example_2, partition_len=0.025).solve()
 print(solution_2_2)
 
 '''
-example_3 is from research paper
-An Algorithm for Separable Non convex Programming Problems
+Source: An Algorithm for Separable Non convex Programming Problems
 
 Authors: James E. Falk and Richard M. Soland, May 1969
 

@@ -1,8 +1,7 @@
 from laptimize.solver import Solver
 
 '''
-example_1 is from the research paper 
-AN ALGORITHM FOR LOCATING APPROXIMATE GLOBAL SOLUTIONS OF NON CONVEX , SEPARABLE PROBLEMS
+Source :AN ALGORITHM FOR LOCATING APPROXIMATE GLOBAL SOLUTIONS OF NON CONVEX , SEPARABLE PROBLEMS
 
 Author : James E. Falk, April 20 , 1972
 
@@ -29,22 +28,21 @@ example_1 = {
     'constraints_2': {'x1': lambda x: 6 * x ** 2, 'x2': lambda x: -18 * x, 'value': 0},
     'capacity': {'x1': [0, 3], 'x2': [0, 3]}}
 
-solution_1 = Solver(example_1, partition_len=0.5).solve()
+solution_1 = Solver(example_1, partition_len=0.25).solve()
 print(solution_1)
 
 solution_2 = Solver(example_1, partition_len=0.25).solve()
 print(solution_2)
 
 '''
-example_1 is from following research paper
-An Algorithm for Separable Non convex Programming Problems II - Non convex constraints
+Source : An Algorithm for Separable Non convex Programming Problems II - Non convex constraints
 
 Authors: Richard M. Soland, July 1971
 
 Minimize: F0(x1, x2) = 12*x1 + 7*x2 - x2^2
 subject to : 
 convex polygon
-            F1(x1, X2) = 2*x1 + x2 - 0 <= 0
+            F1(x1, X2) = 2*x1 + x2 - 3 <= 0
             0 <= x1 <= 2, 0 <= x1 <= 3
 non convex constraint 
             F2(x1, X2) = -2*x1^4 -x2 +2 <=0   
@@ -69,13 +67,12 @@ solution_2 = Solver(example_2, partition_len=0.5).solve()
 print(solution_2)
 
 '''
-example_3 is from the flowing link
-http://www.universalteacherpublications.com/univ/ebooks/or/Ch15/seprablex1.htm
+Source : http://www.universalteacherpublications.com/univ/ebooks/or/Ch15/seprablex1.htm
 
 example_2:
 Maximize:   F0(x1, x2) = 5*x1 - x1^2 + 3*x2 - x2^2
 
-subject to :F1(x1, x2) = 2x14 + x2 ≤ 32
+subject to :F1(x1, x2) = 2x1^4 + x2 ≤ 32
             F2(x1, x2) = x1 + 2*x2^2 ≤ 32
                     x1, x2 ≥ 0
 
@@ -126,16 +123,3 @@ example_4 = {'objective': {'x1': lambda x: x ** 2 - 6 * x, 'x2': lambda x: x ** 
              'capacity': {'x1': [0, 5], 'x2': [0, 5], 'x3': [0, 5], 'value': None}}
 solution_4 = Solver(example_4, partition_len=0.025).solve()
 print(solution_4)
-
-# TODO
-
-#
-# problem2 = {'objective': {'y1': lambda x: -2 * x ** 2, 'y2': lambda x: 2 * x ** 2, 'x0': lambda x: -2 * x + x ** 2,
-#                           'x1': lambda x: 2 * x ** 2, 'value': None},
-#             'constraints_1': {'y1': lambda x: 0, 'y2': lambda x: 0, 'x0': lambda x: x ** 3, 'x1': lambda x: -x,
-#                               'value': 0},
-#             'constraints_2': {'y1': lambda x: 0, 'y2': lambda x: 0, 'x0': lambda x: 0, 'x1': lambda x: -x, 'value': -1},
-#             'capacity': {'y1': [1, 505], 'y2': [-488.5, 4.5], 'x0': [1, 10], 'x1': [1, 1000], 'value': None}}
-#
-# values = Solver(problem7, partition_len=0.5).solve()
-# print(values)
